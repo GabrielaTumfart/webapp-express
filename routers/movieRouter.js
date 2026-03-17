@@ -16,3 +16,5 @@ router.get("/:id", movieController.show);
 module.exports = router;
 
 // Postmann - aggiungo rotta index per lista film - testo su Postman e funziona corretamente
+
+// aggiungo rotta show per i dettagli di un singolo film - testo su Postam e funziona corretamente
