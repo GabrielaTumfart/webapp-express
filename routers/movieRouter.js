@@ -11,3 +11,5 @@ const movieController = require("../controllers/movieController");
 router.get("/", movieController.index);
 
 module.exports = router;
+
+//! feat: aggiungo rotta index per lista film - testo su Postman e funziona corretamente
