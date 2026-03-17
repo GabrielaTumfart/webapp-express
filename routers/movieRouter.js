@@ -11,7 +11,7 @@ const movieController = require("../controllers/movieController");
 router.get("/", movieController.index);
 
 // show - GET /movies/:id - dettagli di un singolo film
-router.get("/:id, movieController.show");
+router.get("/:id", movieController.show);
 
 module.exports = router;
 
