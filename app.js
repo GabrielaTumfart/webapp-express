@@ -19,6 +19,10 @@ connection.connect((err) => {
 // creo l'app express
 const app = express();
 
+// ROUTES
+const movieRouter = require("./routers/movieRouter");
+app.use("/movies", movieRouter);
+
 // SERVER START
 app.listen(process.env.APP_PORT, () => {
   // mostra l'ambiente e l'url del server
