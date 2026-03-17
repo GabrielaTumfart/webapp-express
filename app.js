@@ -23,6 +23,11 @@ const app = express();
 const movieRouter = require("./routers/movieRouter");
 app.use("/movies", movieRouter);
 
+// ERROR MIDDLEWARES
+const errorMiddleware = require("./middlewares/errorHandlers");
+app.use(errorMiddleware.error404);
+app.use(errorMiddleware.error500);
+
 // SERVER START
 app.listen(process.env.APP_PORT, () => {
   // mostra l'ambiente e l'url del server
