@@ -4,6 +4,18 @@ const express = require("express");
 // importo dotenv per leggere il file .env
 require("dotenv").config();
 
+// importo la connessione al database
+const connection = require("./database/conn");
+
+// verifico la connesione al database
+connection.connect((err) => {
+  if (err) {
+    console.log("Errore di connessione al database: " + err.message);
+    return;
+  }
+  console.log("Database connesso Gabriela!");
+});
+
 // creo l'app express
 const app = express();
 
