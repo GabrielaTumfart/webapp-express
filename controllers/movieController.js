@@ -26,7 +26,11 @@ function index(req, res) {
 // Show - GET /movies/:id - Restituisce un singolo film in formato JSON
 function show(req, res) {
   const movieId = parseInt(req.params.id);
-  const sql = "SELECT * FROM movies WHERE id = ?";
+  const sql = `SELECT movies.*, reviews.*
+               FROM movies
+               LEFT JOIN reviews 
+               ON movies.id = reviews.movie_id
+               WHERE movies.id = ?`;
 
   // callback - gestisco il risultado della query
   connection.query(sql, [movieId], (err, results) => {
