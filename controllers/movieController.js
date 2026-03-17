@@ -57,7 +57,7 @@ function show(req, res) {
     res.json({
       message: "Film recuperato con successo",
       success: true,
-      result: results[0],
+      result: results,
     });
   });
 }
