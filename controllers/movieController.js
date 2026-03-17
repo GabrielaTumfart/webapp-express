@@ -23,4 +23,36 @@ function index(req, res) {
   });
 }
 
-module.exports = { index };
+// Show - GET /movies/:id - Restituisce un singolo film in formato JSON
+function show(req, res) {
+  const movieId = parseInt(req.params.id);
+  const sql = "SELECT * FROM movies WHERE id = ?";
+
+  // callback - gestisco il risultado della query
+  connection.query(sql, [movieId], (err, results) => {
+    // se c'è un errore restituiscimi 500
+    if (err) {
+      return res.status(500).json({
+        message: "Errore nel recupero del film",
+        success: false,
+      });
+    }
+
+    // se il film non esiste restituiscimi 404
+    if (results.length === 0) {
+      return res.status(404).json({
+        message: `ERRORE 404 - Film ${movieId} non trovato`,
+        success: false,
+      });
+    }
+
+    // restituiscimi il film
+    res.json({
+      message: "Film recuperato con successo",
+      success: true,
+      result: results[0],
+    });
+  });
+}
+
+module.exports = { index, show };
