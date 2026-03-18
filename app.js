@@ -25,6 +25,9 @@ const app = express();
 // abilito cors
 app.use(cors());
 
+// serve la cartella public
+app.use(express.static("public"));
+
 // ROUTES
 const movieRouter = require("./routers/movieRouter");
 app.use("/movies", movieRouter);
