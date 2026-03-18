@@ -67,4 +67,4 @@ function show(req, res) {
   });
 }
 
-module.exports = { index };
+module.exports = { index, show };
