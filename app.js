@@ -1,6 +1,9 @@
 // importo express
 const express = require("express");
 
+// importo cors
+const cors = require("cors");
+
 // importo dotenv per leggere il file .env
 require("dotenv").config();
 
@@ -18,6 +21,9 @@ connection.connect((err) => {
 
 // creo l'app express
 const app = express();
+
+// abilito cors
+app.use(cors());
 
 // ROUTES
 const movieRouter = require("./routers/movieRouter");
