@@ -25,19 +25,11 @@ function index(req, res) {
 
 // Show - GET /movies/:id - Restituisce un singolo film in formato JSON
 function show(req, res) {
-  const movieId = parseInt(req.params.id);
-  const sql = `SELECT movies.*, 
-               reviews.id AS review_id,
-               reviews.vote,
-               reviews.text
-               FROM movies
-               LEFT JOIN reviews 
-               ON movies.id = reviews.movie_id
-               WHERE movies.id = ?`;
+  const { id } = req.params;
 
-  // callback - gestisco il risultado della query
-  connection.query(sql, [movieId], (err, results) => {
-    // se c'è un errore restituiscimi 500
+  const movieSQL = `SELECT * FROM movies WHERE id = ?`;
+
+  connection.query(movieSQL, [id], (err, movieResult) => {
     if (err) {
       return res.status(500).json({
         message: "Errore nel recupero del film",
@@ -45,21 +37,34 @@ function show(req, res) {
       });
     }
 
-    // se il film non esiste restituiscimi 404
-    if (results.length === 0) {
+    const [movie] = movieResult;
+
+    if (!movie) {
       return res.status(404).json({
-        message: `ERRORE 404 - Film ${movieId} non trovato`,
+        message: `Film ${id} non trovato`,
         success: false,
       });
     }
 
-    // restituiscimi il film
-    res.json({
-      message: "Film recuperato con successo",
-      success: true,
-      result: results,
+    const reviewSQL = `SELECT * FROM reviews WHERE movie_id = ?`;
+
+    connection.query(reviewSQL, [id], (err, reviewsResult) => {
+      if (err) {
+        return res.status(500).json({
+          message: "Errore nel recupero delle recensioni",
+          success: false,
+        });
+      }
+
+      movie.reviews = reviewsResult;
+
+      res.json({
+        message: "Film recuperato con successo",
+        success: true,
+        result: movie,
+      });
     });
   });
 }
 
-module.exports = { index, show };
+module.exports = { index };
