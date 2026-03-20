@@ -70,5 +70,27 @@ function show(req, res) {
     });
   });
 }
+// storeReview - POST /movies/:id/review - salva una nuova recensione
+function storeReview(req, res) {
+  const { id } = req.params;
+  const { name, vote, text } = req.body;
 
-module.exports = { index, show };
+  const storeReviewSQL = `
+    INSERT INTO reviews
+    (movie_id, name, vote, text) VALUES
+    (?, ?, ?, ?);
+  `;
+
+  connection.query(storeReviewSQL, [id, name, vote, text], (err, result) => {
+    if (err) {
+      return res.status(500).json({
+        message: "Errore nel salvare la recensione",
+        success: false,
+      });
+    }
+    const { insertId } = result;
+    res.status(201).json({ insertId });
+  });
+}
+
+module.exports = { index, show, storeReview };
