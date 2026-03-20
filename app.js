@@ -22,6 +22,9 @@ connection.connect((err) => {
 // creo l'app express
 const app = express();
 
+// abilito la lettura del body in formato JSON
+app.use(express.json());
+
 // abilito cors
 app.use(cors());
 
