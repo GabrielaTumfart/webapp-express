@@ -4,7 +4,11 @@ const connection = require("../database/conn");
 // creo la funzione per ottenere la lista dei film
 function index(req, res) {
   // faccio la query per ottenere tutti i film
-  const sql = "SELECT * FROM movies";
+  const sql = `SELECT movies.*, AVG(reviews.vote) AS avg_vote
+               FROM movies
+               INNER JOIN reviews
+               ON movies.id = reviews.movie_id
+               GROUP BY movies.id`;
 
   // callback - gestisco il risultato  della query
   connection.query(sql, (err, results) => {

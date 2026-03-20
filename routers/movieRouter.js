@@ -13,6 +13,9 @@ router.get("/", movieController.index);
 // show - GET /movies/:id - dettagli di un singolo film
 router.get("/:id", movieController.show);
 
+// storeReview - POST /movies/:id/review - salva una nuova recensione
+router.post("/:id/review", movieController.storeReview);
+
 module.exports = router;
 
 // Postmann - aggiungo rotta index per lista film - testo su Postman e funziona corretamente
